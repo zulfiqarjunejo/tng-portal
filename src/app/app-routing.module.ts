@@ -13,6 +13,9 @@ import { RegisteredComponent } from './authentication/registered/registered.comp
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsersComponent } from './users/users.component';
 
+import { SdkComponent } from './sdk/sdk.component';
+import { SdkDescriptorGeneratorComponent } from './sdk/sdk-descriptor-generator/sdk-descriptor-generator.component';
+
 import { PlatformListComponent } from './platforms/platform-list/platform-list.component';
 import { PlatformComponent } from './platforms/platform/platform.component';
 
@@ -84,7 +87,7 @@ const routes: Routes = [
 	{
 		path: '',
 		component: IndexComponent,
-		canActivate: [ AuthGuard ],
+		canActivate: [AuthGuard],
 		children: [
 			{ path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 			{ path: 'dashboard', component: DashboardComponent },
@@ -117,12 +120,12 @@ const routes: Routes = [
 			{ path: 'validation-and-verification', redirectTo: 'validation-and-verification/packages', pathMatch: 'full' },
 			{
 				path: 'validation-and-verification/packages', component: VnvPackagesComponent,
-				children: [ { path: ':id', component: VnvPackagesDetailComponent } ]
+				children: [{ path: ':id', component: VnvPackagesDetailComponent }]
 			},
 			{
 				path: 'validation-and-verification/network-services',
 				component: VnvNetworkServicesComponent,
-				children: [ { path: ':id', component: VnvNetworkServicesDetailComponent } ]
+				children: [{ path: ':id', component: VnvNetworkServicesDetailComponent }]
 			},
 			{ path: 'validation-and-verification/functions', component: FunctionsComponent },
 			{
@@ -136,15 +139,15 @@ const routes: Routes = [
 			{ path: 'service-platform', redirectTo: 'service-platform/packages', pathMatch: 'full' },
 			{
 				path: 'service-platform/packages', component: SpPackagesComponent,
-				children: [ { path: ':id', component: SpPackagesDetailComponent } ]
+				children: [{ path: ':id', component: SpPackagesDetailComponent }]
 			},
 			{
 				path: 'service-platform/network-services', component: SpNetworkServicesComponent,
-				children: [ { path: ':id', component: SpNetworkServicesDetailComponent } ]
+				children: [{ path: ':id', component: SpNetworkServicesDetailComponent }]
 			},
 			{
 				path: 'service-platform/functions', component: FunctionsComponent,
-				children: [ { path: ':id', component: SpFunctionsDetailComponent } ]
+				children: [{ path: ':id', component: SpFunctionsDetailComponent }]
 			},
 			{ path: 'service-platform/policies/placement-policy', component: PlacementPolicyComponent },
 			{
@@ -164,7 +167,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'service-platform/slas/sla-agreements', component: SlaAgreementsComponent,
-				children: [ { path: ':id_sla/:id_ns', component: SlaAgreementsDetailComponent } ]
+				children: [{ path: ':id_sla/:id_ns', component: SlaAgreementsDetailComponent }]
 			},
 			{ path: 'service-platform/slas/sla-violations', component: SlaViolationsComponent },
 			{
@@ -183,17 +186,17 @@ const routes: Routes = [
 			},
 			{
 				path: 'service-platform/slices/slices-requests', component: RequestsComponent,
-				children: [ { path: ':id', component: RequestDetailComponent } ]
+				children: [{ path: ':id', component: RequestDetailComponent }]
 			},
 			// Service Management section
 			{ path: 'service-management', redirectTo: 'service-management/network-services', pathMatch: 'full' },
 			{
 				path: 'service-management/network-services', component: SmNetworkServicesComponent,
-				children: [ { path: ':id', component: SmNetworkServicesDetailComponent } ]
+				children: [{ path: ':id', component: SmNetworkServicesDetailComponent }]
 			},
 			{
 				path: 'service-management/requests', component: RequestsComponent,
-				children: [ { path: ':id', component: RequestDetailComponent } ]
+				children: [{ path: ':id', component: RequestDetailComponent }]
 			},
 			{
 				path: 'service-management/network-service-instances', component: NetworkServiceInstancesComponent,
@@ -204,10 +207,13 @@ const routes: Routes = [
 			},
 			{
 				path: 'service-management/licenses', component: LicencesComponent,
-				children: [ { path: ':id', component: LicencesDetailComponent } ]
+				children: [{ path: ':id', component: LicencesDetailComponent }]
 			},
 			{ path: 'service-management/licenses/service-licenses', component: ServiceLicensesComponent },
-			{ path: 'service-management/licenses/user-licenses', component: UserLicensesComponent }
+			{ path: 'service-management/licenses/user-licenses', component: UserLicensesComponent },
+			// SDK Portal
+			{ path: 'sdk', component: SdkComponent },
+			{ path: 'sdk/descriptor-generator', component: SdkDescriptorGeneratorComponent }
 		]
 	}
 ];
@@ -215,8 +221,8 @@ const routes: Routes = [
 @NgModule({
 	// Hashstyle routing (includes # to the URL, not pretty. Instead using pathstyle routing with Nginx)
 	// imports: [RouterModule.forRoot(routes, {useHash: true})],
-	imports: [ RouterModule.forRoot(routes) ],
-	exports: [ RouterModule ],
-	providers: [ AuthGuard ]
+	imports: [RouterModule.forRoot(routes)],
+	exports: [RouterModule],
+	providers: [AuthGuard]
 })
 export class AppRoutingModule { }

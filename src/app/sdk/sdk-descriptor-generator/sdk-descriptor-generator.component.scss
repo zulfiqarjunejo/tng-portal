@@ -1,0 +1,19 @@
+@import "../../../constants.scss";
+app-sdk-descriptor-generator {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1;
+  align-items: center;
+  width: auto;
+  height: 100%;
+  background-color: $basic-background-color;
+}
+
+.form-section {
+  width: 50%;
+}
+
+.mat-custom-input-full-width {
+  width: 100%;
+}

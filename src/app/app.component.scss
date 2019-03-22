@@ -645,3 +645,14 @@ ul.unordered-list .mat-input-element:disabled {
 		color: $secondary-font-color;
 	}
 }
+
+//////////////////////////////////////
+// Width utility classes
+//////////////////////////////////////
+.full-width {
+	width: 100%;
+}
+
+.half-width {
+	width: 50%;
+}

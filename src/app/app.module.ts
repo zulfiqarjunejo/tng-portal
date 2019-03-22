@@ -52,9 +52,12 @@ import { ServiceManagementModule } from './service-management/service-management
 import { PlatformsModule } from './platforms/platforms.module';
 import { SettingsModule } from './settings/settings.module';
 import { SharedModule } from './shared/shared.module';
+import { SdkComponent } from './sdk/sdk.component';
+import { SdkDescriptorGeneratorComponent } from './sdk/sdk-descriptor-generator/sdk-descriptor-generator.component';
+import { VnfDescriptionComponent } from './sdk/sdk-descriptor-generator/vnf-description/vnf-description.component';
 
 @NgModule({
-	declarations: [ AppComponent, MenuComponent, IndexComponent, DashboardComponent, UsersComponent ],
+	declarations: [AppComponent, MenuComponent, IndexComponent, DashboardComponent, UsersComponent, SdkComponent, SdkDescriptorGeneratorComponent, VnfDescriptionComponent],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
@@ -71,7 +74,7 @@ import { SharedModule } from './shared/shared.module';
 		SharedModule,
 		AuthenticationModule
 	],
-	providers: [ { provide: LOCALE_ID, useValue: 'en' } ],
-	bootstrap: [ AppComponent ]
+	providers: [{ provide: LOCALE_ID, useValue: 'en' }],
+	bootstrap: [AppComponent]
 })
 export class AppModule { }

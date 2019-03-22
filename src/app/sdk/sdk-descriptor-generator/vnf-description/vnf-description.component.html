@@ -1,0 +1,13 @@
+<div layout="row">
+  <mat-form-field class="half-width">
+    <input matInput placeholder="Image Name" [formControl]="formControls[0]">
+  </mat-form-field>
+  <mat-form-field class="half-width">
+    <mat-label>docker</mat-label>
+    <mat-select [formControl]="formControls[1]">
+      <mat-option *ngFor="let type of types" [value]="type">
+        {{type}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

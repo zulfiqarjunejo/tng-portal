@@ -1,0 +1,46 @@
+<h3 class="title3 header-section-name" i18n="@@sdk">SDK</h3>
+<h1 class="title1 title-section-name" i18n="@@sdk-descriptor-generator">Descriptor Generator</h1>
+
+<div class="form-section">
+    <h2 class="title2">Welcome to 5GTANGO developer portal</h2>
+    <h4 class="title4">Please start creating your new service by entering high-level information below</h4>
+
+    <mat-form-field [hideRequiredMarker]="options.value.hideRequired" [floatLabel]="options.value.floatLabel"
+        class="mat-custom-input-full-width">
+        <input matInput placeholder="Author" required [formControl]="author">
+    </mat-form-field>
+
+    <mat-form-field [hideRequiredMarker]="options.value.hideRequired" [floatLabel]="options.value.floatLabel"
+        class="mat-custom-input-full-width">
+        <input matInput placeholder="Vendor" required [formControl]="vendor">
+    </mat-form-field>
+
+    <mat-form-field [hideRequiredMarker]="options.value.hideRequired" [floatLabel]="options.value.floatLabel"
+        class="mat-custom-input-full-width">
+        <input matInput placeholder="Service Name" required [formControl]="serviceName">
+    </mat-form-field>
+
+    <mat-form-field [hideRequiredMarker]="options.value.hideRequired" [floatLabel]="options.value.floatLabel"
+        class="mat-custom-input-full-width">
+        <textarea matInput placeholder="Service Description" [formControl]="serviceDescription"></textarea>
+    </mat-form-field>
+
+    <div *ngFor='let vnf of vnfs' class="mat-custom-input-full-width">
+        <app-vnf-description class="mat-custom-input-full-width" [formControls]=vnf></app-vnf-description>
+    </div>
+    <button mat-button class="mat-custom-input-full-width" (click)="addVnf()">Add VNF</button>
+</div>
+
+<button mat-button class="half-width" (click)="generate()">Generate!</button>
+
+<!-- <p>{{author.value}}</p>
+<p>{{vendor.value}}</p>
+<p>{{serviceName.value}}</p>
+<p>{{serviceDescription.value}}</p>
+<p *ngFor='let vnf of vnfs'>
+    {{vnf[0].value}}
+</p> -->
+
+<app-spinner *ngIf="loading"></app-spinner>
+
+<router-outlet></router-outlet>
