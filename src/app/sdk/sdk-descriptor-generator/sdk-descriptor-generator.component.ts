@@ -26,6 +26,10 @@ export class SdkDescriptorGeneratorComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.author.setValue('5GTANGO Developer');
+    this.vendor.setValue('eu.5gtango');
+    this.serviceName.setValue('tango-nsd');
+    this.serviceDescription.setValue('Default Description');
   }
 
   addVnf() {

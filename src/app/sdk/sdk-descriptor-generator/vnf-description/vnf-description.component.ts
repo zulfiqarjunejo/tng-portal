@@ -7,13 +7,13 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./vnf-description.component.css']
 })
 export class VnfDescriptionComponent implements OnInit {
-
-  types = ["docker", "vhd", "vmdk", "vdi", "iso", "qcow2", "ova", "ovf", "raw"]
   @Input() formControls: Array<FormControl>;
 
   constructor() { }
 
   ngOnInit() {
+    this.formControls[0].setValue('ubuntu:16.04');
+    this.formControls[1].setValue('docker');
   }
 
 }

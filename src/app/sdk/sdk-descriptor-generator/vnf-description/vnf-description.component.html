@@ -1,13 +1,22 @@
 <div layout="row">
+
   <mat-form-field class="half-width">
     <input matInput placeholder="Image Name" [formControl]="formControls[0]">
   </mat-form-field>
+
   <mat-form-field class="half-width">
-    <mat-label>docker</mat-label>
-    <mat-select [formControl]="formControls[1]">
-      <mat-option *ngFor="let type of types" [value]="type">
-        {{type}}
-      </mat-option>
-    </mat-select>
+    <mat-label>Network Images</mat-label>
+    <select matNativeControl required>
+      <option value="docker">docker</option>
+      <option value="vhd">vhd</option>
+      <option value="vmdk">vmdk</option>
+      <option value="vdi">vdi</option>
+      <option value="iso">iso</option>
+      <option value="qcow2">qcow2</option>
+      <option value="ova">ova</option>
+      <option value="ovf">ovf</option>
+      <option value="raw">raw</option>
+    </select>
   </mat-form-field>
+
 </div>

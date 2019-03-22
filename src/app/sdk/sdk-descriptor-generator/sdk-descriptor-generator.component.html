@@ -6,41 +6,32 @@
     <h4 class="title4">Please start creating your new service by entering high-level information below</h4>
 
     <mat-form-field [hideRequiredMarker]="options.value.hideRequired" [floatLabel]="options.value.floatLabel"
-        class="mat-custom-input-full-width">
+        class="full-width">
         <input matInput placeholder="Author" required [formControl]="author">
     </mat-form-field>
 
     <mat-form-field [hideRequiredMarker]="options.value.hideRequired" [floatLabel]="options.value.floatLabel"
-        class="mat-custom-input-full-width">
+        class="full-width">
         <input matInput placeholder="Vendor" required [formControl]="vendor">
     </mat-form-field>
 
     <mat-form-field [hideRequiredMarker]="options.value.hideRequired" [floatLabel]="options.value.floatLabel"
-        class="mat-custom-input-full-width">
+        class="full-width">
         <input matInput placeholder="Service Name" required [formControl]="serviceName">
     </mat-form-field>
 
     <mat-form-field [hideRequiredMarker]="options.value.hideRequired" [floatLabel]="options.value.floatLabel"
-        class="mat-custom-input-full-width">
+        class="full-width">
         <textarea matInput placeholder="Service Description" [formControl]="serviceDescription"></textarea>
     </mat-form-field>
 
-    <div *ngFor='let vnf of vnfs' class="mat-custom-input-full-width">
-        <app-vnf-description class="mat-custom-input-full-width" [formControls]=vnf></app-vnf-description>
+    <div *ngFor='let vnf of vnfs' class="full-width">
+        <app-vnf-description class="full-width" [formControls]=vnf></app-vnf-description>
     </div>
-    <button mat-button class="mat-custom-input-full-width" (click)="addVnf()">Add VNF</button>
+    <button mat-button class="full-width" (click)="addVnf()">Add VNF</button>
 </div>
 
-<button mat-button class="half-width" (click)="generate()">Generate!</button>
-
-<!-- <p>{{author.value}}</p>
-<p>{{vendor.value}}</p>
-<p>{{serviceName.value}}</p>
-<p>{{serviceDescription.value}}</p>
-<p *ngFor='let vnf of vnfs'>
-    {{vnf[0].value}}
-</p> -->
+<div><button mat-button (click)="generate()">Generate!</button></div>
 
 <app-spinner *ngIf="loading"></app-spinner>
-
 <router-outlet></router-outlet>
