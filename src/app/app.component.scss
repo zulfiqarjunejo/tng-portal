@@ -2,11 +2,11 @@
 @import '../material-styles.scss';
 @font-face {
 	font-family: 'Calibri';
-	src: url('../assets/fonts/fonts/Calibri.ttf');
+	src: url('../assets/fonts/fonts/Calibri.woff');
 }
 
 * {
-	font-family: 'Calibri';
+	font-family: Calibri, Arial, Helvetica, sans-serif;
 }
 
 body {
@@ -111,6 +111,7 @@ app-spinner {
 p {
 	text-align: justify;
 	color: $secondary-font-color;
+	font-size: 18px;
 }
 
 .error-message {
@@ -237,10 +238,10 @@ p {
 			color: $primary-color-light;
 		}
 
-		.wui-plus::before {
+		.wui-plus:before {
 			margin-right: 5px;
 			font-size: 20px;
-			color: $reload-color;
+			color: $add-color;
 		}
 	}
 }
@@ -297,8 +298,10 @@ p {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		min-width: 120px;
-		min-height: 120px;
+		width: 6vw;
+		height: 6vw;
+		min-width: 80px;
+		min-height: 80px;
 		border-radius: 50%;
 		background-color: $primary-background-color;
 
@@ -327,31 +330,29 @@ p {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-    margin-bottom: 10px;
-}
+    margin-bottom: 2vh;
 
-// Header when the item has an icon on the right
-// Allows dropdown action
-.description .description-title {
-	display: flex;
-	flex-direction: row;
-	width: 100%;
+	.description-title {
+		display: flex;
+		flex-direction: row;
+		width: 100%;
 
-	.title4 {
-        width: 95%;
+		.title4 {
+			flex: 1 1;
+		}
+
+		button {
+			align-self: center;
+			margin-left: 1vw;
+			text-align: right;
+			border: none;
+			cursor: pointer;
+			outline: none;
+			color: $primary-font-color;
+			background-color: $basic-background-color;
+		}
 	}
-	button {
-        align-self: center;
-        text-align: right;
-        border: none;
-		cursor: pointer;
-        outline: none;
-        color: $primary-font-color;
-		background-color: $basic-background-color;
-	}
-}
 
-.description {
 	.title4 {
         margin-bottom: 2px;
         margin-top: 3px;
@@ -365,7 +366,7 @@ p {
 			overflow-y: auto;
 			overflow-x: hidden;
 			white-space: pre-line;
-			min-height: 200px;
+			min-height: 120px;
 			max-height: 200px;
 			color: $secondary-font-color;
 			background-color: $panel-background-color;
@@ -438,11 +439,10 @@ ngx-json-viewer {
 //////////////////////////////////////
 // Advanced section: detailed views
 //////////////////////////////////////
-.advanceSection {
+.advanced-section {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
-	width: 65%;
 
 	button {
 		border: none;
@@ -566,8 +566,20 @@ ul.unordered-list .mat-input-element:disabled {
 }
 
 //////////////////////////////////////
+// Basic button
+//////////////////////////////////////
+.basic-button {
+    border: none;
+    cursor: pointer;
+	outline: none;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+//////////////////////////////////////
 // Button for icons
 //////////////////////////////////////
+.button-shadow,
 .icon-button-shadow {
     border: none;
 	cursor: pointer;
@@ -584,7 +596,7 @@ ul.unordered-list .mat-input-element:disabled {
 //////////////////////////////////////
 // Icons
 //////////////////////////////////////
-.closeIcon {
+.close-icon {
 	position: absolute;
 	padding: 8px;
 	border: none;
@@ -624,16 +636,53 @@ ul.unordered-list .mat-input-element:disabled {
     color: $ready-color;
 }
 
-.icon-button-shadow .wui-undo::before {
+.icon-button-shadow .wui-shopping-cart:before {
+    font-size: 20px;
+	color: $shopping-cart-color;
+}
+
+.icon-button-shadow .wui-undo:before {
 	font-size: 20px;
 	color: $reload-color;
+}
+
+.icon-button-shadow .wui-stop-alt:before {
+	font-size: 15px;
+	color: $stop-color;
+	border-radius: 20%;
+	background-color: $stop-color;
+}
+
+.icon-button-shadow.help {
+	align-self: center ;
+	height: 30px;
+	width: 30px;    
+	font-size: 17px;
+	color: $primary-font-color-light;
+}
+
+.wui-plus:before {
+	margin-right: 5px;
+	font-size: 14px;
+	color: $add-color;
+}
+
+.wui-caret-up:before {
+	font-size: 14px;
+	color: $arrow-color;
+}
+
+.wui-caret-down:before {
+	font-size: 14px;
+	color: $arrow-color;
 }
 
 //////////////////////////////////////
 // Action buttons in detailed views
 //////////////////////////////////////
 .stop,
-.launch {
+.launch,
+.buy {
 	display: flex;
 	align-items: center;
 	width: 30%;

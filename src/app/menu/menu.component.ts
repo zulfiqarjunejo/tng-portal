@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { MatSidenav } from '@angular/material';
+import { Subscription } from 'rxjs';
 
 import { AuthService } from '../authentication/auth.service';
 import { UtilsService } from '../shared/services/common/utils.service';
@@ -11,7 +12,8 @@ import { UtilsService } from '../shared/services/common/utils.service';
 	styleUrls: [ './menu.component.scss' ],
 	encapsulation: ViewEncapsulation.None
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, OnDestroy {
+	subscription: Subscription;
 	menu: string;
 	section: string;
 	subsection: string;
@@ -22,8 +24,8 @@ export class MenuComponent implements OnInit {
 	sideNav: MatSidenav;
 	constructor(
 		private authService: AuthService,
-		private router: Router,
-		private utilsService: UtilsService
+		private utilsService: UtilsService,
+		private router: Router
 	) { }
 
 	ngOnInit() {
@@ -33,6 +35,17 @@ export class MenuComponent implements OnInit {
 
 		// Maintain menu status when reload
 		this.maintainStatus();
+
+		// Maintain status of the menu when moving through different components
+		this.subscription = this.router.events.subscribe(event => {
+			if (event instanceof NavigationEnd) {
+				this.maintainStatus();
+			}
+		});
+	}
+
+	ngOnDestroy() {
+		this.subscription.unsubscribe();
 	}
 
 	copyToClipboard(value) {
@@ -54,7 +67,7 @@ export class MenuComponent implements OnInit {
 				this.router.navigate([ '/platforms' ]);
 				break;
 			case 'settings':
-				this.section = 'vim';
+				this.section = 'endpoint';
 				this.router.navigate([ '/settings' ]);
 				break;
 			case 'validation-and-verification':
@@ -77,6 +90,9 @@ export class MenuComponent implements OnInit {
 
 	setSection(e, buttonId) {
 		switch (buttonId) {
+			case 'endpoint':
+				this.router.navigate([ 'settings/endpoint' ]);
+				break;
 			case 'vim':
 				this.router.navigate([ 'settings/vim' ]);
 				break;
@@ -113,20 +129,20 @@ export class MenuComponent implements OnInit {
 				this.router.navigate([ 'service-platform/slas/sla-templates' ]);
 				break;
 			case 'sp-slices':
-				this.subsection = 'slices-templates';
-				this.router.navigate([ 'service-platform/slices/slices-templates' ]);
+				this.router.navigate([ 'service-platform/slices/slice-templates' ]);
+				break;
+			case 'sm-slices':
+				this.subsection = 'slice-templates';
+				this.router.navigate([ 'service-management/slices/slice-templates' ]);
 				break;
 			case 'sm-network-services':
-				this.router.navigate([ 'service-management/network-services' ]);
+				this.subsection = 'services';
+				this.router.navigate([ 'service-management/network-services/services' ]);
 				break;
 			case 'sm-requests':
 				this.router.navigate([ 'service-management/requests' ]);
 				break;
-			case 'sm-network-service-instances':
-				this.router.navigate([ 'service-management/network-service-instances' ]);
-				break;
-			case 'licenses':
-				this.subsection = '';
+			case 'sm-licenses':
 				this.router.navigate([ 'service-management/licenses' ]);
 				break;
 		}
@@ -159,28 +175,26 @@ export class MenuComponent implements OnInit {
 				this.subsection = 'sla-violations';
 				this.router.navigate([ 'service-platform/slas/sla-violations' ]);
 				break;
-			case 'slices-templates':
-				this.subsection = 'slices-templates';
-				this.router.navigate([ 'service-platform/slices/slices-templates' ]);
+			case 'slice-templates':
+				this.subsection = 'slice-templates';
+				this.router.navigate([ 'service-management/slices/slice-templates' ]);
 				break;
-			case 'slices-instances':
-				this.subsection = 'slices-instances';
-				this.router.navigate([ 'service-platform/slices/slices-instances' ]);
+			case 'slice-instances':
+				this.subsection = 'slice-instances';
+				this.router.navigate([ 'service-management/slices/slice-instances' ]);
 				break;
-			case 'slices-requests':
-				this.subsection = 'slices-requests';
-				this.router.navigate([ 'service-platform/slices/slices-requests' ]);
+			case 'services':
+				this.subsection = 'services';
+				this.router.navigate([ 'service-management/network-services/services' ]);
 				break;
-			case 'service-licenses':
-				this.subsection = 'service-licenses';
-				this.router.navigate([ 'service-management/licenses/service-licenses' ]);
+			case 'network-service-instances':
+				this.subsection = 'network-service-instances';
+				this.router.navigate([ 'service-management/network-services/network-service-instances' ]);
 				break;
-			case 'user-licenses':
-				this.subsection = 'user-licenses';
-				this.router.navigate([ 'service-management/licenses/user-licenses' ]);
+			default:
+				this.subsection = buttonId;
 				break;
 		}
-		this.subsection = buttonId;
 	}
 
 	maintainStatus() {

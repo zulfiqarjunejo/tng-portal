@@ -13,7 +13,7 @@ import { UtilsService } from '../../shared/services/common/utils.service';
 })
 export class TestResultsComponent implements OnInit {
 	loading: boolean;
-	detail = {};
+	detail = { };
 	charts = {
 		ds: {
 			chart: [],
@@ -54,6 +54,10 @@ export class TestResultsComponent implements OnInit {
 			this.testUUID = params[ 'id' ];
 			this.requestResults(params[ 'results_uuid' ]);
 		});
+	}
+
+	convertResults() {
+		return JSON.stringify(this.detail[ 'results' ]);
 	}
 
 	requestResults(uuid) {

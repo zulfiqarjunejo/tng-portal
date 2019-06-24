@@ -13,7 +13,7 @@ import { UtilsService } from '../../shared/services/common/utils.service';
 export class SpPackagesDetailComponent implements OnInit {
 	displayedColumns = [ 'name', 'vendor', 'version' ];
 	loading: boolean;
-	detail = {};
+	detail = { };
 
 	constructor(
 		private utilsService: UtilsService,
@@ -59,6 +59,6 @@ export class SpPackagesDetailComponent implements OnInit {
 	}
 
 	close() {
-		this.router.navigate([ 'service-platform/packages' ]);
+		this.router.navigate([ '../' ], { relativeTo: this.route });
 	}
 }

@@ -4,7 +4,10 @@ import { MatSnackBar } from '@angular/material';
 @Injectable()
 export class UtilsService {
 	ipPattern = '(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)';
-	maskPattern = '([1-9]|1[0-9]|2[0-9]|3[0])';
+	maskPattern = '([1-9]|1[0-9]|2[0-9]|3[2])';
+	ipAndMaskPattern = `${ this.ipPattern }\/${ this.maskPattern }`;
+	ipRangePattern = `${ this.ipPattern }-${ this.ipPattern }(,${ this.ipPattern }-${ this.ipPattern })*`;
+	numberPattern = '^[0-9]*$';
 
 	constructor(
 		public snackBar: MatSnackBar
@@ -18,12 +21,27 @@ export class UtilsService {
 		return this.maskPattern;
 	}
 
+	getIpAndMaskPattern() {
+		return this.ipAndMaskPattern;
+	}
+
+	getIpRangePattern() {
+		return this.ipRangePattern;
+	}
+
+	getNumberPattern() {
+		return this.numberPattern;
+	}
+
 	/**
     * Formats a string so that only the first letter is a capital one
     *
     * @param str string to parse
     */
 	capitalizeFirstLetter(str): string {
+		if (!str) {
+			return;
+		}
 		if (str.includes('_')) {
 			str = str.replace(/_/g, ' ');
 		}
@@ -102,7 +120,7 @@ export class UtilsService {
      */
 	getObjectDifferences(obj1, obj2) {
 		const obj1Props = Object.getOwnPropertyNames(obj1);
-		const result = {};
+		const result = { };
 
 		for (const prop of obj1Props) {
 			if (obj1[ prop ] !== obj2[ prop ] && obj2[ prop ]) {
@@ -119,6 +137,32 @@ export class UtilsService {
      * @param dateIn Date to be displayed
      */
 	formatUTCDate(dateIn) {
-		return new Date(Date.parse(dateIn)).toUTCString();
+		return new Date(dateIn).toUTCString();
+	}
+
+	formatDateString(dateIn) {
+		return new Date(dateIn).toDateString();
+	}
+
+	urlEncode(obj: Object): string {
+		let str = '';
+		Object.keys(obj).forEach(key => {
+			if (obj[ key ] instanceof Array) {
+				obj[ key ].forEach(item => {
+					str +=
+						(str.length > 0 ? '&' : '') +
+						encodeURI(key) +
+						'=' +
+						encodeURI(item);
+				});
+			} else {
+				str +=
+					(str.length > 0 ? '&' : '') +
+					encodeURI(key) +
+					'=' +
+					encodeURI(obj[ key ]);
+			}
+		});
+		return str;
 	}
 }

@@ -20,18 +20,17 @@ import { RuntimePoliciesCreateComponent } from './runtime-policies-create/runtim
 import {
 	RuntimePoliciesGeneratedActionsComponent
 } from './runtime-policies-generated-actions/runtime-policies-generated-actions.component';
-import { SlaTemplatesComponent } from './sla-templates/sla-templates.component';
-import { SlaTemplatesDetailComponent } from './sla-templates-detail/sla-templates-detail.component';
-import { SlaTemplatesCreateComponent } from './sla-templates-create/sla-templates-create.component';
-import { SlaAgreementsComponent } from './sla-agreements/sla-agreements.component';
-import { SlaAgreementsDetailComponent } from './sla-agreements-detail/sla-agreements-detail.component';
+import { SlaTemplateListComponent } from './sla-template-list/sla-template-list.component';
+import { SlaTemplateDetailComponent } from './sla-template-detail/sla-template-detail.component';
+import { SlaTemplateCreateComponent } from './sla-template-create/sla-template-create.component';
+import { SlaAgreementListComponent } from './sla-agreement-list/sla-agreement-list.component';
+import { SlaAgreementDetailComponent } from './sla-agreement-detail/sla-agreement-detail.component';
+import { SlaLicenseDetailComponent } from './sla-license-detail/sla-license-detail.component';
+import { SlaGuaranteesDetailComponent } from './sla-guarantees-detail/sla-guarantees-detail.component';
 import { SlaViolationsComponent } from './sla-violations/sla-violations.component';
-import { SliceTemplateListComponent } from './slice-template-list/slice-template-list.component';
-import { SliceTemplateCreateComponent } from './slice-template-create/slice-template-create.component';
-import { SliceTemplateDetailComponent } from './slice-template-detail/slice-template-detail.component';
-import { SlicesInstancesComponent } from './slices-instances/slices-instances.component';
-import { SlicesInstancesDetailComponent } from './slices-instances-detail/slices-instances-detail.component';
-import { SlicesInstancesCreateComponent } from './slices-instances-create/slices-instances-create.component';
+import { SpSliceTemplateListComponent } from './sp-slice-template-list/sp-slice-template-list.component';
+import { SpSliceTemplateCreateComponent } from './sp-slice-template-create/sp-slice-template-create.component';
+import { SpSliceTemplateDetailComponent } from './sp-slice-template-detail/sp-slice-template-detail.component';
 
 @NgModule({
 	declarations: [
@@ -45,18 +44,17 @@ import { SlicesInstancesCreateComponent } from './slices-instances-create/slices
 		RuntimePoliciesDetailComponent,
 		RuntimePoliciesCreateComponent,
 		RuntimePoliciesGeneratedActionsComponent,
-		SlaTemplatesComponent,
-		SlaTemplatesDetailComponent,
-		SlaTemplatesCreateComponent,
-		SlaAgreementsComponent,
-		SlaAgreementsDetailComponent,
+		SlaTemplateListComponent,
+		SlaTemplateDetailComponent,
+		SlaTemplateCreateComponent,
+		SlaAgreementListComponent,
+		SlaAgreementDetailComponent,
+		SlaLicenseDetailComponent,
+		SlaGuaranteesDetailComponent,
 		SlaViolationsComponent,
-		SliceTemplateListComponent,
-		SliceTemplateCreateComponent,
-		SliceTemplateDetailComponent,
-		SlicesInstancesComponent,
-		SlicesInstancesDetailComponent,
-		SlicesInstancesCreateComponent
+		SpSliceTemplateListComponent,
+		SpSliceTemplateCreateComponent,
+		SpSliceTemplateDetailComponent
 	],
 	entryComponents: [],
 	imports: [
