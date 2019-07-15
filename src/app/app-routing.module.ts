@@ -73,6 +73,7 @@ import { LicenceDetailComponent } from './service-management/license-detail/lice
 
 import { MainPageComponent } from './sdk/main-page/main-page.component';
 import { DescriptorGeneratorComponent } from './sdk/descriptor-generator/descriptor-generator.component';
+import { DescriptorDisplayerComponent } from './sdk/descriptor-displayer/descriptor-displayer.component';
 
 const routes: Routes = [
 	// Redirect to login while there is no dashboard/menu to display
@@ -215,6 +216,9 @@ const routes: Routes = [
 			},
 			{
 				path: 'sdk/descriptor-generator', component: DescriptorGeneratorComponent
+			},
+			{
+				path: 'sdk/descriptor-displayer', component: DescriptorDisplayerComponent
 			}
 			// { path: 'sdk', loadChildren: './sdk/sdk.module#SdkModule' }
 		]
