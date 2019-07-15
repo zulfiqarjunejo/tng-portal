@@ -305,6 +305,36 @@ export class ServicePlatformService {
 	}
 
 	/**
+	 * Retrieves the actual placement policy selected
+	 */
+	async getPlacementPolicy() {
+		const headers = this.authService.getAuthHeaders();
+		const url = this.config.baseSP + this.config.placementPolicies;
+
+		try {
+			return await this.http.get(url, { headers: headers }).toPromise();
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+	/**
+	 * Generates a Placement Policy
+	 *
+	 * @param placementPolicy Data of the desired Placement Policy
+	 */
+	async postPlacementPolicy(placementPolicy) {
+		const headers = this.authService.getAuthHeaders();
+		const url = this.config.baseSP + this.config.placementPolicies;
+
+		try {
+			return await this.http.post(url, placementPolicy, { headers: headers }).toPromise();
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+	/**
 	 * Retrieves a list of Runtime Policies.
 	 * Either following a search pattern or not.
 	 *
@@ -315,7 +345,7 @@ export class ServicePlatformService {
 	async getRuntimePolicies(search?) {
 		const headers = this.authService.getAuthHeaders();
 		const url = search ?
-			this.config.baseSP + this.config.runtimePolicies + search
+			this.config.baseSP + this.config.runtimePolicies + '?' + search
 			: this.config.baseSP + this.config.runtimePolicies;
 
 		try {
@@ -344,37 +374,32 @@ export class ServicePlatformService {
 	 *
 	 * @param uuid UUID of the desired Runtime Policy.
 	 */
-	getOneRuntimePolicy(uuid: string) {
-		return new Promise((resolve, reject) => {
-			const headers = this.authService.getAuthHeaders();
+	async getOneRuntimePolicy(uuid: string) {
+		const headers = this.authService.getAuthHeaders();
+		const url = this.config.baseSP + this.config.runtimePolicies + '/' + uuid;
 
-			this.http
-				.get(this.config.baseSP + this.config.runtimePolicies + '/' + uuid, {
-					headers: headers
-				})
-				.toPromise()
-				.then(response => {
-					resolve({
-						uuid: response[ 'uuid' ],
-						name: response[ 'pld' ][ 'name' ],
-						vendor: response[ 'pld' ][ 'vendor' ],
-						updatedAt: this.utilsService.formatUTCDate(response[ 'updated_at' ]),
-						nsUUID: response[ 'ns_uuid' ],
-						nsName: response[ 'pld' ][ 'network_service' ][ 'name' ],
-						nsVendor: response[ 'pld' ][ 'network_service' ][ 'vendor' ],
-						nsVersion: response[ 'pld' ][ 'network_service' ][ 'version' ],
-						version: response[ 'pld' ][ 'version' ],
-						default: response[ 'default_policy' ],
-						enforced: response[ 'enforced' ] ? 'Yes' : 'No',
-						sla: response[ 'sla_id' ],
-						policyRules: [],
-						monitoringRules: []
-					});
-				})
-				.catch(err =>
-					reject('There was an error while loading the policy information')
-				);
-		});
+		try {
+			const response = await this.http.get(url, { headers: headers }).toPromise();
+			return {
+				uuid: response[ 'uuid' ],
+				name: response[ 'pld' ][ 'name' ],
+				vendor: response[ 'pld' ][ 'vendor' ],
+				updatedAt: this.utilsService.formatUTCDate(response[ 'updated_at' ]),
+				nsUUID: response[ 'ns_uuid' ],
+				nsName: response[ 'pld' ][ 'network_service' ][ 'name' ],
+				nsVendor: response[ 'pld' ][ 'network_service' ][ 'vendor' ],
+				nsVersion: response[ 'pld' ][ 'network_service' ][ 'version' ],
+				version: response[ 'pld' ][ 'version' ],
+				default: response[ 'default_policy' ],
+				enforced: response[ 'enforced' ] ? 'Yes' : 'No',
+				slaUUID: response[ 'sla_id' ],
+				sla: response[ 'sla_name' ],
+				policyRules: response[ 'pld' ][ 'policyRules' ],
+				monitoringRules: response[ 'pld' ][ 'monitoring_rules' ]
+			};
+		} catch (error) {
+			console.error(error);
+		}
 	}
 
 	/**
@@ -382,20 +407,15 @@ export class ServicePlatformService {
 	 *
 	 * @param policy Data of the desired Runtime Policy
 	 */
-	postOneRuntimePolicy(policy): any {
-		return new Promise((resolve, reject) => {
-			const headers = this.authService.getAuthHeaders();
+	async postOneRuntimePolicy(policy) {
+		const headers = this.authService.getAuthHeaders();
+		const url = this.config.baseSP + this.config.runtimePoliciesUI;
 
-			this.http
-				.post(this.config.baseSP + this.config.runtimePolicies, policy, {
-					headers: headers
-				})
-				.toPromise()
-				.then(response => {
-					resolve();
-				})
-				.catch(err => reject(err.statusText));
-		});
+		try {
+			return await this.http.post(url, policy, { headers: headers }).toPromise();
+		} catch (error) {
+			console.error(error);
+		}
 	}
 
 	/**
@@ -405,34 +425,19 @@ export class ServicePlatformService {
 	 * @param defaultPolicy Boolean setting the binding with its ns
 	 * @param nsid UUID of the desired NS
 	 */
-	setDefaultRuntimePolicy(uuid, defaultPolicy, nsid) {
-		return new Promise((resolve, reject) => {
-			const headers = this.authService.getAuthHeaders();
+	async setDefaultRuntimePolicy(uuid, defaultPolicy, nsid) {
+		const headers = this.authService.getAuthHeaders();
+		const url = this.config.baseSP + this.config.runtimePoliciesDefault + uuid;
+		const data = {
+			defaultPolicy,
+			nsid
+		};
 
-			const data = {
-				defaultPolicy,
-				nsid
-			};
-
-			this.http
-				.patch(
-					this.config.baseSP + this.config.runtimePoliciesDefault + uuid,
-					data,
-					{
-						headers: headers
-					}
-				)
-				.toPromise()
-				.then(response => {
-					if (response[ 'code' ] === 'INVALID') {
-						reject('There was an error setting the policy as default!');
-					}
-					resolve(response);
-				})
-				.catch(err =>
-					reject('There was an error setting the policy as default!')
-				);
-		});
+		try {
+			return await this.http.patch(url, data, { headers: headers }).toPromise();
+		} catch (error) {
+			console.error(error);
+		}
 	}
 
 	/**
@@ -442,32 +447,26 @@ export class ServicePlatformService {
 	 * @param slaid UUID of the desired SLA
 	 * @param nsid UUID of the desired NS
 	 */
-	bindRuntimePolicy(uuid, slaid, nsid) {
-		return new Promise((resolve, reject) => {
-			const headers = this.authService.getAuthHeaders();
+	async bindRuntimePolicy(uuid, data) {
+		const headers = this.authService.getAuthHeaders();
+		const url = this.config.baseSP + this.config.runtimePoliciesBind + uuid;
 
-			const data = {
-				slaid,
-				nsid
-			};
+		try {
+			return await this.http.patch(url, data, { headers: headers }).toPromise();
+		} catch (error) {
+			console.error(error);
+		}
+	}
 
-			this.http
-				.patch(
-					this.config.baseSP + this.config.runtimePoliciesBind + uuid,
-					data,
-					{
-						headers: headers
-					}
-				)
-				.toPromise()
-				.then(response => {
-					if (response[ 'code' ] === 'INVALID') {
-						reject('There was an error binding the sla!');
-					}
-					resolve(response);
-				})
-				.catch(err => reject('There was an error binding the sla!'));
-		});
+	async duplicateOneRuntimePolicy(uuid) {
+		const headers = this.authService.getAuthHeaders();
+		const url = this.config.baseSP + this.config.runtimePoliciesClone + uuid;
+
+		try {
+			return await this.http.get(url, { headers: headers }).toPromise();
+		} catch (error) {
+			console.error(error);
+		}
 	}
 
 	/**
@@ -475,23 +474,15 @@ export class ServicePlatformService {
 	 *
 	 * @param uuid UUID of the desired Runtime Policy.
 	 */
-	deleteOneRuntimePolicy(uuid: string): any {
-		return new Promise((resolve, reject) => {
-			const headers = this.authService.getAuthHeaders();
+	async deleteOneRuntimePolicy(uuid: string) {
+		const headers = this.authService.getAuthHeaders();
+		const url = this.config.baseSP + this.config.runtimePolicies + '/' + uuid;
 
-			this.http
-				.delete(this.config.baseSP + this.config.runtimePolicies + '/' + uuid, {
-					headers: headers,
-					responseType: 'text'
-				})
-				.toPromise()
-				.then(response => {
-					resolve(JSON.parse(response));
-				})
-				.catch(err => {
-					reject('There was an error while deleting the policy!');
-				});
-		});
+		try {
+			return await this.http.delete(url, { headers: headers, responseType: 'text' }).toPromise();
+		} catch (error) {
+			console.error(error);
+		}
 	}
 
 	/**
@@ -502,41 +493,29 @@ export class ServicePlatformService {
 	 *                          matched by the returned list of
 	 *                          Generated Actions.
 	 */
-	getGeneratedActions(search?): any {
-		return new Promise((resolve, reject) => {
-			const headers = this.authService.getAuthHeaders();
-			const url =
-				search !== undefined
-					? this.config.baseSP + this.config.runtimePoliciesActions + search
-					: this.config.baseSP + this.config.runtimePoliciesActions;
+	async getGeneratedActions(search?) {
+		const headers = this.authService.getAuthHeaders();
+		const url =
+			search ?
+				this.config.baseSP + this.config.runtimePoliciesActions + '?' + search
+				: this.config.baseSP + this.config.runtimePoliciesActions;
 
-			this.http
-				.get(url, {
-					headers: headers
-				})
-				.toPromise()
-				.then(response => {
-					if (response instanceof Array) {
-						resolve(
-							response.map(item => {
-								return {
-									correlationUUID: item.correlation_id,
-									vnfName: item.action[ 'vnf_name' ],
-									scalingType: item.action[ 'scaling_type' ],
-									serviceInstanceUUID: item.action[ 'service_instance_id' ],
-									value: item.action[ 'value' ],
-									date: item.inDateTime
-								};
-							})
-						);
-					} else {
-						reject('There was an error while fetching the generated actions');
-					}
-				})
-				.catch(err =>
-					reject('There was an error while fetching the generated actions')
-				);
-		});
+		try {
+			const response = await this.http.get(url, { headers: headers }).toPromise();
+			return response instanceof Array ?
+				response.map(item => {
+					return {
+						correlationUUID: item.correlation_id,
+						vnfName: item.action[ 'vnf_name' ],
+						scalingType: item.action[ 'scaling_type' ],
+						serviceInstanceUUID: item.action[ 'service_instance_id' ],
+						value: item.action[ 'value' ],
+						date: item.inDateTime
+					};
+				}) : [];
+		} catch (error) {
+			console.error(error);
+		}
 	}
 
 	/**

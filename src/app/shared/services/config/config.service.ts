@@ -28,8 +28,11 @@ export class ConfigService extends Config {
 	tests = 'tests/descriptors';
 	testExecute = 'tests/plans';
 	testExecutions = 'tests/results';
+	placementPolicies = 'policies/placement';
 	runtimePolicies = 'policies';
+	runtimePoliciesUI = 'policies/ui';
 	runtimePoliciesBind = 'policies/bind/';
+	runtimePoliciesClone = 'policies/clone/';
 	runtimePoliciesDefault = 'policies/default/';
 	runtimePoliciesActions = 'policies/actions';
 	vimSettings = 'settings/vims';
