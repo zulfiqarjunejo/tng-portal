@@ -22,6 +22,8 @@ import { FunctionsComponent } from './components/functions/functions.component';
 import { FeatureAvailableDirective } from './directives/feature-available.directive';
 import { TrimFormValuesDirective } from './directives/trimFormValues.directive';
 
+import { ControlsValidator } from './utils/controls-validator';
+
 export function initConfiguration(configService: ConfigService): Function {
 	return () => configService.init();
 }
@@ -38,7 +40,7 @@ export function initConfiguration(configService: ConfigService): Function {
 		FeatureAvailableDirective,
 		TrimFormValuesDirective
 	],
-	entryComponents: [ DialogComponent ],
+	entryComponents: [DialogComponent],
 	imports: [
 		CommonModule,
 		AngularMaterialModule,
@@ -55,7 +57,7 @@ export function initConfiguration(configService: ConfigService): Function {
 		SpinnerComponent,
 		FunctionsComponent,
 		FeatureAvailableDirective,
-		TrimFormValuesDirective
+		TrimFormValuesDirective,
 	],
 	providers: [
 		ConfigService,
@@ -68,9 +70,10 @@ export function initConfiguration(configService: ConfigService): Function {
 		{
 			provide: APP_INITIALIZER,
 			useFactory: initConfiguration,
-			deps: [ ConfigService ],
+			deps: [ConfigService],
 			multi: true
-		}
+		},
+		ControlsValidator
 	]
 })
 export class SharedModule { }

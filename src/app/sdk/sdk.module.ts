@@ -6,16 +6,16 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '../angular-material/angular-material.module';
 import { SharedModule } from '../shared/shared.module';
 
-// import { SdkService } from './sdk.service';
+import { SdkService } from './sdk.service';
 
 import { MainPageComponent } from './main-page/main-page.component';
-// import { DescriptorGeneratorComponent } from './descriptor-generator/descriptor-generator.component';
+import { DescriptorGeneratorComponent } from './descriptor-generator/descriptor-generator.component';
 // import { DescriptorDisplayerComponent } from './descriptor-displayer/descriptor-displayer.component';
 
 @NgModule({
 	declarations: [
 		MainPageComponent,
-		// DescriptorGeneratorComponent,
+		DescriptorGeneratorComponent,
 		// DescriptorDisplayerComponent
 	],
 	imports: [
@@ -26,7 +26,6 @@ import { MainPageComponent } from './main-page/main-page.component';
 		ReactiveFormsModule,
 		FormsModule
 	],
-	// providers: [SdkService]
-	providers: []
+	providers: [SdkService]
 })
 export class SdkModule { }

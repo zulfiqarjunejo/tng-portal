@@ -20,11 +20,9 @@ export class DescriptorGeneratorComponent implements OnInit {
 
 	constructor(private router: Router, private route: ActivatedRoute, private controlsValidator: ControlsValidator,
 		private http: HttpClient, private service: SdkService) {
-		console.log('here');
 	}
 
 	ngOnInit() {
-		console.log('here?');
 		this.initForm();
 	}
 
