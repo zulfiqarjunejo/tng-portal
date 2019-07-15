@@ -71,6 +71,7 @@ import {
 import { LicenceListComponent } from './service-management/license-list/license-list.component';
 import { LicenceDetailComponent } from './service-management/license-detail/license-detail.component';
 
+import { MainPageComponent } from './sdk/main-page/main-page.component';
 
 const routes: Routes = [
 	// Redirect to login while there is no dashboard/menu to display
@@ -84,7 +85,7 @@ const routes: Routes = [
 	{
 		path: '',
 		component: IndexComponent,
-		canActivate: [ AuthGuard ],
+		canActivate: [AuthGuard],
 		children: [
 			{ path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 			{ path: 'dashboard', component: DashboardComponent },
@@ -118,12 +119,12 @@ const routes: Routes = [
 			{ path: 'validation-and-verification', redirectTo: 'validation-and-verification/packages', pathMatch: 'full' },
 			{
 				path: 'validation-and-verification/packages', component: VnvPackagesComponent,
-				children: [ { path: ':id', component: VnvPackagesDetailComponent } ]
+				children: [{ path: ':id', component: VnvPackagesDetailComponent }]
 			},
 			{
 				path: 'validation-and-verification/network-services',
 				component: VnvNetworkServicesComponent,
-				children: [ { path: ':id', component: VnvNetworkServicesDetailComponent } ]
+				children: [{ path: ':id', component: VnvNetworkServicesDetailComponent }]
 			},
 			{ path: 'validation-and-verification/functions', component: FunctionsComponent },
 			{
@@ -137,15 +138,15 @@ const routes: Routes = [
 			{ path: 'service-platform', redirectTo: 'service-platform/packages', pathMatch: 'full' },
 			{
 				path: 'service-platform/packages', component: SpPackagesComponent,
-				children: [ { path: ':id', component: SpPackagesDetailComponent } ]
+				children: [{ path: ':id', component: SpPackagesDetailComponent }]
 			},
 			{
 				path: 'service-platform/network-services', component: SpNetworkServicesComponent,
-				children: [ { path: ':id', component: SpNetworkServicesDetailComponent } ]
+				children: [{ path: ':id', component: SpNetworkServicesDetailComponent }]
 			},
 			{
 				path: 'service-platform/functions', component: FunctionsComponent,
-				children: [ { path: ':id', component: SpFunctionsDetailComponent } ]
+				children: [{ path: ':id', component: SpFunctionsDetailComponent }]
 			},
 			{ path: 'service-platform/policies/placement-policy', component: PlacementPolicyComponent },
 			{
@@ -165,7 +166,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'service-platform/slas/sla-agreements', component: SlaAgreementListComponent,
-				children: [ { path: ':id_sla/:id_nsi', component: SlaAgreementDetailComponent } ]
+				children: [{ path: ':id_sla/:id_nsi', component: SlaAgreementDetailComponent }]
 			},
 			{ path: 'service-platform/slas/sla-violations', component: SlaViolationsComponent },
 			{
@@ -192,7 +193,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'service-management/network-services/services', component: SmNetworkServicesComponent,
-				children: [ { path: ':id', component: SmNetworkServicesDetailComponent } ]
+				children: [{ path: ':id', component: SmNetworkServicesDetailComponent }]
 			},
 			{
 				path: 'service-management/network-services/network-service-instances', component: NsInstanceListComponent,
@@ -202,12 +203,16 @@ const routes: Routes = [
 			},
 			{
 				path: 'service-management/requests', component: RequestListComponent,
-				children: [ { path: ':id', component: RequestDetailComponent } ]
+				children: [{ path: ':id', component: RequestDetailComponent }]
 			},
 			{
 				path: 'service-management/licenses', component: LicenceListComponent,
-				children: [ { path: ':id', component: LicenceDetailComponent } ]
+				children: [{ path: ':id', component: LicenceDetailComponent }]
+			},
+			{
+				path: 'sdk', component: MainPageComponent
 			}
+			// { path: 'sdk', loadChildren: './sdk/sdk.module#SdkModule' }
 		]
 	}
 ];
@@ -215,8 +220,8 @@ const routes: Routes = [
 @NgModule({
 	// Hashstyle routing (includes # to the URL, not pretty. Instead using pathstyle routing with Nginx)
 	// imports: [RouterModule.forRoot(routes, {useHash: true})],
-	imports: [ RouterModule.forRoot(routes) ],
-	exports: [ RouterModule ],
-	providers: [ AuthGuard ]
+	imports: [RouterModule.forRoot(routes)],
+	exports: [RouterModule],
+	providers: [AuthGuard]
 })
 export class AppRoutingModule { }
